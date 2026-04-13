@@ -1,0 +1,10 @@
+[
+  {
+    "name": "desktop",
+    "title": "Desktop",
+    "icon": "desktop",
+    "url": "desktop",
+    "start": true,
+    "mode": "split-right"
+  }
+]
