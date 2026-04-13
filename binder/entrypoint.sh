@@ -20,18 +20,20 @@ start_rviz() {
         return
     fi
 
-    export DISPLAY="${DISPLAY:-:1}"
+    export DISPLAY="${RVIZ_DISPLAY:-${DISPLAY:-:1}}"
     export RVIZ_CONFIG_FILE="${RVIZ_CONFIG_FILE:-/home/jovyan/.rviz2/default.rviz}"
+    export LIBGL_ALWAYS_SOFTWARE="${LIBGL_ALWAYS_SOFTWARE:-1}"
+    export QT_X11_NO_MITSHM="${QT_X11_NO_MITSHM:-1}"
 
     (
-        for _ in $(seq 1 30); do
+        while true; do
             if xdpyinfo -display "${DISPLAY}" >/dev/null 2>&1; then
+                echo "Starting RViz on display ${DISPLAY}" >&2
                 exec rviz2 -d "${RVIZ_CONFIG_FILE}"
             fi
+            echo "Waiting for display ${DISPLAY} before starting RViz" >&2
             sleep 2
         done
-
-        echo "RViz startup skipped: display ${DISPLAY} did not become ready." >&2
     ) >/tmp/rviz2.log 2>&1 &
 }
 

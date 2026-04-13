@@ -22,7 +22,9 @@ RUN apt update && apt install -y --no-install-recommends \
     ros-jazzy-xacro \
     ros-jazzy-rqt-joint-trajectory-controller \
     graphviz graphviz-dev \
-    python3-vcstool && \
+    python3-vcstool \
+    nodejs \
+    npm && \
     rm -rf /var/lib/apt/lists/*
 
 # ------------------------------------------------------------
@@ -70,6 +72,11 @@ COPY default.rviz /home/jovyan/.rviz2/default.rviz
 RUN mkdir -p /home/jovyan/.ipython/profile_default/startup /root/.ipython/profile_default/startup
 COPY binder/01-auto-desktop.py /home/jovyan/.ipython/profile_default/startup/01-auto-desktop.py
 COPY binder/01-auto-desktop.py /root/.ipython/profile_default/startup/01-auto-desktop.py
+RUN cd ${REPO_DIR}/binder/desktop-widget && \
+    npm install && \
+    npm run build && \
+    jupyter labextension install . --no-build && \
+    jupyter lab build --minimize=False
 
 # The entrypoint of the docker image
 COPY binder/entrypoint.sh /entrypoint.sh

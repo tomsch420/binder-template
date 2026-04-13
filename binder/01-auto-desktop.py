@@ -57,7 +57,7 @@ def display_desktop(anchor="split-right"):
 
 
 def _auto_open_desktop():
-    if os.environ.get("AUTO_OPEN_DESKTOP", "1") != "1":
+    if os.environ.get("AUTO_OPEN_DESKTOP", "0") != "1":
         return
 
     shell = get_ipython()
