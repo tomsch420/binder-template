@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="pycram-d42a16bf1e8890314d8f0ef67238c93c545c94c5" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="GOOGLE" />
