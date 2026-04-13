@@ -13,11 +13,16 @@ services:
     command: jupyter lab --allow-root --NotebookApp.token='' --no-browser --ip=0.0.0.0
     ports:
       - 8888:8888
+    environment:
+      - AUTO_START_RVIZ=1
+      - RVIZ_CONFIG_FILE=/home/jovyan/.rviz2/default.rviz
     volumes:
       - ../:/home/repo:rw
     # Use Host Display
     #   - /tmp/.X11-unix:/tmp/.X11-unix:rw  # X11 socket for GUI apps
     # environment:
+    #   - AUTO_START_RVIZ=1
+    #   - RVIZ_CONFIG_FILE=/home/jovyan/.rviz2/default.rviz
     #   - DISPLAY=${DISPLAY}  # Use host display for GUI apps
     # GPU support
       # - NVIDIA_DRIVER_CAPABILITIES=all
@@ -28,4 +33,3 @@ services:
     #         - driver: nvidia
     #           count: all
     #           capabilities: [gpu]
-
