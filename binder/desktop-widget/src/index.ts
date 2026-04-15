@@ -112,6 +112,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     void app.restored.then(async () => {
+      app.shell.collapseLeft();
       await openNotebook();
       await app.commands.execute(COMMAND_ID);
     });
