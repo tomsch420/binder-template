@@ -112,7 +112,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     void app.restored.then(async () => {
-      app.shell.collapseLeft();
+      void app.commands.execute('application:toggle-left-area');
       await openNotebook();
       await app.commands.execute(COMMAND_ID);
     });
