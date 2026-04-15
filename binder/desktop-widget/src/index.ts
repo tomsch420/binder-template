@@ -7,12 +7,12 @@ import { MainAreaWidget, WidgetTracker } from '@jupyterlab/apputils';
 import { PageConfig } from '@jupyterlab/coreutils';
 import { IDocumentManager } from '@jupyterlab/docmanager';
 import { NotebookActions, NotebookPanel } from '@jupyterlab/notebook';
+import { Cell } from '@jupyterlab/cells';
 import { Widget } from '@lumino/widgets';
 
 const COMMAND_ID = 'desktop-widget:open';
 const NAMESPACE = 'desktop-widget';
 const DEFAULT_NOTEBOOK = 'notebooks/demo.ipynb';
-const AUTO_RUN_CELL_INDEX = 0;
 
 class DesktopContent extends Widget {
   constructor() {
@@ -70,16 +70,19 @@ const plugin: JupyterFrontEndPlugin<void> = {
         await panel.context.ready;
         await panel.sessionContext.ready;
 
-        const cellCount = panel.content.widgets.length;
-        if (cellCount <= AUTO_RUN_CELL_INDEX) {
+        const firstCodeCellIndex = panel.content.widgets.findIndex(
+          (cell: Cell) => cell.model.type === 'code'
+        );
+
+        if (firstCodeCellIndex === -1) {
           return;
         }
 
-        panel.content.activeCellIndex = AUTO_RUN_CELL_INDEX;
+        panel.content.activeCellIndex = firstCodeCellIndex;
         await NotebookActions.run(panel.content, panel.sessionContext);
       } catch (error) {
         console.error(
-          `Failed to auto-run cell ${AUTO_RUN_CELL_INDEX} in ${DEFAULT_NOTEBOOK}`,
+          `Failed to auto-run the first code cell in ${DEFAULT_NOTEBOOK}`,
           error
         );
       }

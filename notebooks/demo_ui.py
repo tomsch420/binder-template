@@ -277,7 +277,7 @@ def _selection_summary(selection):
     """
 
 
-def show_demo_ui(on_start=None):
+def run_ui(on_start=None):
     global CURRENT_DEMO_SELECTION
 
     _inject_styles()
@@ -370,3 +370,6 @@ def show_demo_ui(on_start=None):
     container = widgets.VBox([controls], layout=widgets.Layout(width="100%"))
     container.add_class("demo-shell")
     display(container)
+
+
+show_demo_ui = run_ui
